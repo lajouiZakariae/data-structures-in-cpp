@@ -18,14 +18,14 @@ string const NOT_EXISTED_ERR = "Node does not exist\n";
 
 class Node {
     public:
-        string name;
+        float number;
         Node *next;
     
-        Node(string);
+        Node(float);
 };
 
-Node::Node(string name){
-    this->name = name;
+Node::Node(float number){
+    this->number = number;
     this->next = NULL;
 }
 
@@ -40,34 +40,35 @@ class LL {
             size = 0;
         }
 
-        void add(string);
-        void unshift(string);
+        void add(float);
+        void unshift(float);
         void remove(int);
         void shift();
         void pop();
+        void sort(string);
         void displayAll();
 };
 
 int main(int argc, char const *argv[]){
     LL list;
     
-    list.add("Zakariae");
-    list.add("Belly");
-    list.add("John");
+    list.add(56);
+    list.add(10);
+    list.add(69);
 
-    list.unshift("Silly");
-    list.unshift("Lores");
+    list.unshift(7);
+    list.unshift(13);
 
     list.displayAll();
 
-    list.shift();
+    list.sort("ASC");
 
     list.displayAll();
 }
 
 
-void LL::add(string name){
-    Node* newItem = new Node(name);
+void LL::add(float number){
+    Node* newItem = new Node(number);
     
     if (head == NULL) { // first element
         head = newItem;
@@ -84,8 +85,8 @@ void LL::add(string name){
     size++;
 }
 
-void LL::unshift(string name){
-    Node* newItem = new Node(name);
+void LL::unshift(float number){
+    Node* newItem = new Node(number);
     
     if (head == NULL) { // first element
         head = newItem;
@@ -142,6 +143,33 @@ void LL::pop(){
     }
 }
 
+void LL::sort(string order){
+
+    for (int i = 0; i < size - 1; i++) {
+        Node* current = head;
+        int changes = 0;
+
+        for (int j = 0; j < size - 1 - i; j++) {
+            float current_number = current->number;
+            float next_number = current->next->number;
+
+            if (
+                (current_number > next_number and order == "ASC") or
+                (current_number < next_number and order == "DESC")
+                ) {
+                    // Swap
+                    current->number = next_number;
+                    current->next->number = current_number;
+                    changes++;
+            }
+
+            current = current->next;
+        }
+
+        if (changes == 0) break; // No changer = the list in the right order
+    }    
+}
+
 void LL::displayAll(){
     Node* current = head;
     int count = 0;
@@ -153,7 +181,7 @@ void LL::displayAll(){
         cout << EMPTY_ERR;
     
     while (current != NULL) {
-        cout << count << ": " << current->name << endl ;
+        cout << count << ": " << current->number << endl ;
         current = current->next;
         count++;
     }
