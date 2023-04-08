@@ -1,10 +1,11 @@
 #include <iostream>
 
 using namespace std;
+
+// Error Messages
 string const EMPTY_ERR = "List is empty\n";
 string const NOT_EXISTED_ERR = "Node does not exist\n";
-// struct Node {
-// };
+
 class Node {
     public:
         string name;
@@ -33,6 +34,7 @@ class LL {
         void unshift(string);
         void remove(int);
         void shift();
+        void pop();
         void displayAll();
 };
 
@@ -44,8 +46,12 @@ int main(int argc, char const *argv[]){
     list.add("John");
 
     list.unshift("Silly");
+    list.unshift("Lores");
 
-    list.shift();
+    // list.shift();
+    list.displayAll();
+
+    list.remove(3);
 
     list.displayAll();
 }
@@ -65,7 +71,7 @@ void LL::add(string name){
 
         current->next = newItem;
     }
-    
+
     size++;
 }
 
@@ -96,8 +102,7 @@ void LL::remove(int pos){
             index++;
         }
 
-        Node* tmp = current->next->next;
-        current->next = tmp;
+        current->next = current->next->next;
     }
     
 }
@@ -107,6 +112,20 @@ void LL::shift(){
         cout << NOT_EXISTED_ERR;
     }else{
         head = head->next;
+    }
+}
+
+void LL::pop(){
+    if (head == NULL){
+        cout << NOT_EXISTED_ERR;
+    }else{
+        Node* current = head;
+
+        while (current->next->next != NULL) {
+            current = current->next;
+        }
+        
+        current->next = NULL ;
     }
 }
 
