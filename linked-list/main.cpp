@@ -2,6 +2,16 @@
 
 using namespace std;
 
+/**
+ * A Linked-List implementation in c++
+ * with the following methods:
+ *  - add new element to the list
+ *  - remove an element from the list
+ *  - unshift: add to the beginning
+ *  - shift: remove the first one
+ *  - pop: remove the last one
+*/
+
 // Error Messages
 string const EMPTY_ERR = "List is empty\n";
 string const NOT_EXISTED_ERR = "Node does not exist\n";
@@ -48,10 +58,9 @@ int main(int argc, char const *argv[]){
     list.unshift("Silly");
     list.unshift("Lores");
 
-    // list.shift();
     list.displayAll();
 
-    list.remove(3);
+    list.shift();
 
     list.displayAll();
 }
@@ -89,29 +98,31 @@ void LL::unshift(string name){
 }
 
 void LL::remove(int pos){    
-    if (pos >= size || pos < 0){
+    if (pos >= size || pos < 0) { // Out of Scope
         cout << NOT_EXISTED_ERR;
-    } else if( pos == 0 ) {
-        head = head->next;
+    } else if( pos == 0 ) { // First Element
+        this->pop();
     } else {
         Node* current = head;
-        int index = 0;
-        
-        while (index != pos - 1){
-            current = current->next;
-            index++;
-        }
 
-        current->next = current->next->next;
+        for (int i = 0; i < pos - 1 ; i++)
+            current = current->next;
+        
+        Node* to_delete = current->next;
+        current->next = to_delete->next;
+        delete to_delete;
+        size--;
     }
-    
 }
 
 void LL::shift(){
     if (head == NULL){
         cout << NOT_EXISTED_ERR;
     }else{
+        Node* to_delete = head;
         head = head->next;
+        delete to_delete;
+        size--;
     }
 }
 
@@ -121,21 +132,25 @@ void LL::pop(){
     }else{
         Node* current = head;
 
-        while (current->next->next != NULL) {
+        for (int i = 0; i < size - 2; i++)
             current = current->next;
-        }
         
-        current->next = NULL ;
+        Node* to_delete = current->next;
+        current->next = NULL;
+        delete to_delete;
+        size--;
     }
 }
 
 void LL::displayAll(){
     Node* current = head;
     int count = 0;
-    cout << "------------------" << endl;
-    if (current == NULL){
+    cout << "-------------------" << endl;
+    cout << "Size of List: " << size << endl;
+    cout << "-------------------" << endl;
+
+    if (current == NULL)
         cout << EMPTY_ERR;
-    }
     
     while (current != NULL) {
         cout << count << ": " << current->name << endl ;
@@ -143,5 +158,5 @@ void LL::displayAll(){
         count++;
     }
 
-    cout << "------------------" << endl;
+    cout << "-------------------" << endl;
 };
