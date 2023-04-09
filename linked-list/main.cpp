@@ -65,6 +65,21 @@ int main(int argc, char const* argv[]) {
 
     list.displayAll();
     float** arr = list.split(2);
+    cout << arr[0][0];
+    // float** arr = new float* [2];
+
+    // for (int i = 0; i < 2; i++) {
+    //     arr[i] = new float[5];
+    // }
+
+    // cout << sizeof(arr) << endl;
+    // cout << arr[0][1] << endl;
+    // for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
+    //     for (int j = 0; j < sizeof(arr[0]) / sizeof(float); j++) {
+            // cout << arr[i][j] << endl;
+    //     }
+    // }
+
 }
 
 void LL::add(float number) {
@@ -245,9 +260,9 @@ void LL::sort(string order) {
 void LL::displayAll() {
     Node* current = head;
     int count = 0;
-    cout << "*-------------------*" << endl;
+    cout << "*------------------------*" << endl;
     cout << "Size of List: " << size << endl;
-    cout << "*-------------------*" << endl;
+    cout << "*------------------------*" << endl;
 
     if (current == NULL)
         cout << EMPTY_ERR;
@@ -258,5 +273,5 @@ void LL::displayAll() {
         count++;
     }
 
-    cout << "*-------------------*" << endl;
+    cout << "*------------------------*" << endl;
 };
