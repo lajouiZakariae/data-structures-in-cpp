@@ -49,9 +49,13 @@ public:
     void pop();
     void replace(float, float);
     void replaceAll(float, float);
+    void insertAt(int, float);
+    void insertAfter(int, float);
+    void insertBefore(int, float);
     // Data Access
     int get(float);
     int getLast(float);
+
     // 
     float** split(int parts);
     void sort(string);
