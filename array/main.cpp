@@ -11,7 +11,11 @@ private:
 
 public:
     Array(int);
+    int getLength();
     void del(int);
+    float get(int);
+    int find(float);
+    int findLast(float);
     void displayAll();
 };
 
@@ -23,8 +27,6 @@ Array::Array(int length = 5) {
 int main(int argc, char const* argv[]) {
     Array notes;
 
-    notes.displayAll();
-    notes.del(9);
     notes.displayAll();
 
     return 0;
@@ -53,7 +55,23 @@ void Array::del(int index) {
     }
 }
 
+int Array::getLength() {
+    return length;
+}
 
+float Array::get(int index) {
+    for (int i = 0; i < length; i++) if (index == i) return arr[i];
+}
+
+int Array::find(float note) {
+    for (int i = 0; i < length; i++) if (arr[i] == note) return i;
+}
+
+int Array::findLast(float note) {
+    int index_of_note;
+    for (int i = 0; i < length; i++) if (arr[i] == note) index_of_note = i;
+    return index_of_note;
+}
 
 void Array::displayAll() {
     cout << "*-------------------------*" << endl;

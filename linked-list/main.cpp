@@ -49,9 +49,9 @@ public:
     void pop();
     void replace(float, float);
     void replaceAll(float, float);
-    void insertAt(int, float);
     void insertAfter(int, float);
     void insertBefore(int, float);
+    void reverse();
     // Data Access
     int get(float);
     int getLast(float);
@@ -68,22 +68,8 @@ int main(int argc, char const* argv[]) {
     for (int i = 1; i < 11; i++) list.add(rand());
 
     list.displayAll();
-    float** arr = list.split(2);
-    cout << arr[0][0];
-    // float** arr = new float* [2];
-
-    // for (int i = 0; i < 2; i++) {
-    //     arr[i] = new float[5];
-    // }
-
-    // cout << sizeof(arr) << endl;
-    // cout << arr[0][1] << endl;
-    // for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
-    //     for (int j = 0; j < sizeof(arr[0]) / sizeof(float); j++) {
-            // cout << arr[i][j] << endl;
-    //     }
-    // }
-
+    list.reverse();
+    list.displayAll();
 }
 
 void LL::add(float number) {
@@ -168,6 +154,56 @@ void LL::pop() {
     }
 }
 
+void LL::insertAfter(int index, float number) {
+    Node* current = head;
+    for (int i = 0; i <= index; i++) {
+        if (i == index) {
+            Node* newItem = new Node(number);
+
+            Node* tmp = current->next;
+            current->next = newItem;
+            newItem->next = tmp;
+
+            size++;
+        }
+        current = current->next;
+    }
+
+}
+
+void LL::insertBefore(int index, float number) {
+    Node* current = head;
+
+    for (int i = 0; i <= index; i++) {
+        if (i == index - 1) {
+            Node* newItem = new Node(number);
+            Node* tmp = current->next;
+            current->next = newItem;
+            newItem->next = tmp;
+            cout << current->number << endl;
+        }
+        current = current->next;
+    }
+
+}
+
+void LL::reverse() {
+    Node* current = head;
+    Node* prev = NULL;
+    Node* next = NULL;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+
+        // Move to the next
+        prev = current;
+        current = next;
+    }
+
+    head = prev;
+}
+
 int LL::get(float number) {
     Node* current = head;
     for (int i = 0; i < size; i++) {
@@ -193,25 +229,21 @@ int LL::getLast(float number) {
 void LL::replace(float number, float new_number) {
     Node* current = head;
 
-    while (current != NULL) {
+    for (Node* current = head; current != NULL; current = current->next) {
         if (current->number == number) {
             current->number = new_number;
             return;
         };
-
-        current = current->next;
     }
+
 }
 
 void LL::replaceAll(float number, float new_number) {
     Node* current = head;
 
-    while (current != NULL) {
+    for (Node* current = head; current != NULL; current = current->next)
         if (current->number == number)
             current->number = new_number;
-
-        current = current->next;
-    }
 }
 
 float** LL::split(int chunk_size) {
@@ -271,9 +303,8 @@ void LL::displayAll() {
     if (current == NULL)
         cout << EMPTY_ERR;
 
-    while (current != NULL) {
+    for (Node* current = head;current != NULL; current = current->next) {
         cout << count << ": " << current->number << endl;
-        current = current->next;
         count++;
     }
 
