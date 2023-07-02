@@ -3,70 +3,45 @@
 using namespace std;
 
 class TreeItem {
-
-private:
-    int value;
+public:
+    int value ;
     TreeItem* left;
     TreeItem* right;
-
 public:
-    TreeItem(int);
-
-    int getValue();
-
-    void setLeft(TreeItem*);
-
-    TreeItem getLeft();
-
-    void setRight(TreeItem*);
+    TreeItem(int _value){
+        value=_value;
+    };
 };
 
 class Tree {
 
-private:
-    TreeItem head;
+public:
+    TreeItem* head;
 
 public:
-    Tree(int);
-    TreeItem gethead();
-};
+    Tree(int _value){
+        head = new TreeItem(_value);
+    };
+      
+    void setLeft(int _value){
+        TreeItem* treeItem = new TreeItem(_value);
+        head->left = treeItem;
+    }
 
-
+    void setRight(int _value){
+        TreeItem* treeItem = new TreeItem(_value);
+        head->right = treeItem;
+    }
+}; 
 
 int main(int argc, char const* argv[]) {
-    Tree tree(150);
-    TreeItem leftItem(130);
+    Tree tree(23);
 
-    tree.gethead().setLeft(leftItem);
-    cout << tree.gethead().getLeft();
+    tree.setLeft(150);
+
+    tree.setRight(79);
+
+    cout << tree.head->right->value << endl;
 
     return 0;
-}
-
-TreeItem::TreeItem(int val) {
-    value = val;
-}
-
-int TreeItem::getValue() {
-    return value;
-}
-
-void TreeItem::setLeft(TreeItem* _left) {
-    left = _left;
-};
-
-TreeItem* TreeItem::getLeft() {
-    return left;
-};
-
-void TreeItem::setRight(TreeItem* _right) {
-    right = _right;
-};
-
-Tree::Tree(int value) : head(value)
-{
-}
-
-TreeItem Tree::gethead() {
-    return head;
 }
