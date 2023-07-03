@@ -26,7 +26,7 @@ public:
     int pop();
     void push(int);
     void clear();
-    void  traverse();
+void traverse(void (*pFunc)(int));
 };
 
 void show(int _value){
@@ -44,7 +44,7 @@ int main(int argc, char const* argv[]) {
 
     cout << stack.pop() << endl; 
 
-    stack.traverse();
+    stack.traverse(show);
 
     return 0;
 }
@@ -99,11 +99,12 @@ void Stack::clear(){
     size = 0;
 }
 
-void Stack::traverse(){
+void Stack::traverse(void (*pFunc)(int)){
     Node* cursor = top;
 
     while( cursor ){
         // Call the handler
+        (*pFunc)(cursor->value);
         cursor = cursor->next;
     }
 }
