@@ -13,18 +13,25 @@ public:
 
 Node::Node(int _value) {
     value = _value;
+    next = NULL;
 }
 
 class Stack {
-private:
-    Node* head;
+public:
+    Node* top;
     int size;
 public:
     Stack(/* args */);
     void printAll();
     int pop();
     void push(int);
+    void clear();
+    void  traverse();
 };
+
+void show(int _value){
+    cout << _value << endl;
+}
 
 int main(int argc, char const* argv[]) {
     Stack stack;
@@ -33,29 +40,25 @@ int main(int argc, char const* argv[]) {
 
     stack.push(16);
 
-    stack.pop();
+    stack.push(8);
 
-    stack.push(32);
+    cout << stack.pop() << endl; 
 
-    stack.push(21);
-
-    stack.pop();
-
-    stack.printAll();
+    stack.traverse();
 
     return 0;
 }
 
 Stack::Stack() {
-    head = NULL;
+    top = NULL;
     size = 0;
 }
 
 void Stack::printAll() {
-    Node* cursor = head;
+    Node* cursor = top;
     int i = 1;
     cout << "----- Stack Items (" << size << ")-----" << endl;
-    while (cursor != NULL) {
+    while (cursor) {
         cout << "Item number " << i << ": " << cursor->value << endl;
         cursor = cursor->next;
         i++;
@@ -65,32 +68,42 @@ void Stack::printAll() {
 };
 
 int Stack::pop() {
-    Node* cursor = head;
+    int value = top->value;
 
-    while (cursor->next->next != NULL) {
-        cursor = cursor->next;
-    }
-
-    delete cursor->next;
-    cursor->next = NULL;
+    Node* topNode = top;
+    top = top->next;
+    delete topNode;
     size--;
+
+    return value;
 };
 
 void Stack::push(int _value) {
     Node* newNode = new Node(_value);
-    newNode->next = NULL;
-
-    if (head == NULL) {
-        head = newNode;
-    }
-    else {
-        Node* cursor = head;
-
-        while (cursor->next != NULL) {
-            cursor = cursor->next;
-        }
-
-        cursor->next = newNode;
-    }
+    newNode->value = _value;
+    newNode->next = top;
+    top = newNode;
     size++;
 };
+
+void Stack::clear(){
+    Node* cursor = top;
+
+    while(cursor){  
+        Node* nextPos = cursor->next;
+        delete cursor;
+        cursor = nextPos;
+    }
+
+    top = NULL;
+    size = 0;
+}
+
+void Stack::traverse(){
+    Node* cursor = top;
+
+    while( cursor ){
+        // Call the handler
+        cursor = cursor->next;
+    }
+}
