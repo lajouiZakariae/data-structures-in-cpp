@@ -23,8 +23,8 @@ public:
     Queue();
     void printAll();
     void enqueue(int);
-    void dequeue();
-
+    int dequeue();
+    void clear();
 };
 
 int main(int argc, char const* argv[])
@@ -39,9 +39,12 @@ int main(int argc, char const* argv[])
 
     queue.enqueue(18);
 
-    queue.enqueue(20);
 
-    queue.dequeue();
+    queue.printAll();
+
+    queue.clear();
+
+    queue.enqueue(20);
 
     queue.printAll();
 
@@ -86,9 +89,26 @@ void Queue::enqueue(int _value) {
     this->size++;
 };
 
-void Queue::dequeue() {
+int Queue::dequeue() {
     Node* nextNode = head->next;
-    delete head;
+    int _value = head->value;
+
+    delete head;   
     head = nextNode;
     size--;
+
+    return _value;
+}
+
+void Queue::clear(){
+    Node* cursor = head;
+
+    while ( cursor ){
+        Node* nextNode = cursor->next;
+        delete cursor; 
+        cursor = nextNode;
+    };
+
+    size = 0;
+    head = NULL;
 }
